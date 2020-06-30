@@ -33,10 +33,6 @@ class AdminBlogController extends Controller
      */
     public function form(int $article_id = null)
     {
-        // メソッドの引数に指定すれば、ルートパラメータを取得できる
-
-        // Eloquent モデルはクエリビルダとしても動作するので find メソッドで記事データを取得
-        // 返り値は null か App\Models\Article Object
         $article = $this->article->find($article_id);
 
         // 記事データがあれば toArray メソッドで配列にしておき、フォーマットした post_date を入れる
@@ -48,16 +44,12 @@ class AdminBlogController extends Controller
             $article_id = null;
         }
 
-        // old ヘルパーを使うと、直前のリクエストのフラッシュデータを取得できる
-        // ここではバリデートエラーとなったときに、入力していた値を old ヘルパーで取得する
-        // DBから取得した値よりも優先して表示するため、array_merge の第二引数に設定する
         $input = array_merge($input, old());
 
-        // View テンプレートへ値を渡すときは、第二引数に連想配列を設定する
-        // View テンプレートでは 連想配列のキー名で値を取り出せる
-        // return view('admin_blog.form', ['input' => $input, 'article_id' => $article_id]);
-        // compact 関数を使うと便利
-        return view('admin_blog.form', compact('input', 'article_id'));
+        // カテゴリーの取得
+        // pluck メソッドを使って引数に指定した項目で配列を生成する
+        $category_list = $this->category->getCategoryList()->pluck('name', 'category_id');
+        return view('admin_blog.form', compact('input', 'article_id', 'category_list'));
     }
 
     /**
@@ -133,5 +125,37 @@ class AdminBlogController extends Controller
     {
         $list = $this->category->getCategoryList(self::NUM_PER_PAGE);
         return view('admin_blog.category', compact('list'));
+    }
+
+    /**
+     * カテゴリ編集・新規作成API
+     *
+     * @param AdminBlogRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function editCategory(AdminBlogRequest $request)
+    {
+        $input = $request->input();
+        $category_id = $request->input('category_id');
+
+        $category = $this->category->updateOrCreate(compact('category_id'), $input);
+
+        // APIなので json のレスポンスを返す
+        return response()->json($category);
+    }
+
+    /**
+     * カテゴリ削除API
+     *
+     * @param AdminBlogRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deleteCategory(AdminBlogRequest $request)
+    {
+        $category_id = $request->input('category_id');
+        $this->category->destroy($category_id);
+
+        // APIなので json のレスポンスを返す
+        return response()->json();
     }
 }
