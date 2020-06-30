@@ -17,3 +17,6 @@ Route::get('/', function () {
 
 
 Route::get('admin/form', 'AdminBlogController@form')->name('admin_form');
+
+// ブログ記事　保存処理
+Route::post('admin/post', 'AdminBlogController@post')->name('admin_post');
