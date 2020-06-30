@@ -13,6 +13,9 @@ class AdminBlogController extends Controller
     /** @var Article */
     protected $article;
 
+    // 1ページ当たりの表示件数
+    const NUM_PER_PAGE = 10;
+
     public function __construct(Article $article)
     {
         // Article モデルクラスのインスタンスを作成
@@ -105,7 +108,18 @@ class AdminBlogController extends Controller
         $result = $this->article->destroy($article_id);
         $message = ($result) ? '記事を削除しました' : '記事の削除に失敗しました。';
 
-        // フォーム画面へリダイレクト
-        return redirect()->route('admin_form')->with('message', $message);
+        // 記事一覧画面へリダイレクト
+        return redirect()->route('admin_list')->with('message', $message);
+    }
+
+    /**
+     * ブログ記事一覧画面
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function list()
+    {
+        $list = $this->article->getArticleList(self::NUM_PER_PAGE);
+        return view('admin_blog.list', compact('list'));
     }
 }

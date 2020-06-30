@@ -12,11 +12,14 @@
 */
 
 
-
-Route::get('admin/form/{article_id?}', 'AdminBlogController@form')->name('admin_form');
-
-// 保存処理
-Route::post('admin/post', 'AdminBlogController@post')->name('admin_post');
-
-// 削除処理
-Route::post('admin/delete', 'AdminBlogController@delete')->name('admin_delete');
+// 下記のようにルーティングをグループ化することもできる
+// prefix メソッドを使って、グループ内の全てのルートの URI に admin を付ける
+Route::prefix('admin')->group(function () {
+    Route::get('form/{article_id?}', 'AdminBlogController@form')->name('admin_form');
+    // 保存処理
+    Route::post('post', 'AdminBlogController@post')->name('admin_post');
+    // 削除処理
+    Route::post('delete', 'AdminBlogController@delete')->name('admin_delete');
+    // 一覧画面
+    Route::get('list', 'AdminBlogController@list')->name('admin_list');
+});

@@ -50,4 +50,18 @@ class Article extends Model
         $post_date = new Carbon($value);
         $this->attributes['post_date'] = $post_date->format('Y-m-d');
     }
+
+
+    /**
+     * 記事リストを取得する
+     *
+     * @param  int $num_per_page 1ページ当たりの表示件数
+     * @return Illuminate\Pagination\LengthAwarePaginator
+     */
+    public function getArticleList($num_per_page = 10)
+    {
+        // Eloquent モデルはクエリビルダとしても動作するので、orderBy メソッドも paginate メソッドも利用できる
+        // paginate メソッドを使うと、ページネーションに必要な全件数の取得やオフセットの指定などは全部やってくれる
+        return $this->orderBy('article_id', 'desc')->paginate($num_per_page);
+    }
 }
