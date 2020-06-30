@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AdminBlogRequest;
 use App\Models\Article;
+use App\Models\Category;
 
 use Illuminate\Http\Request;
 
@@ -12,16 +13,16 @@ class AdminBlogController extends Controller
 
     /** @var Article */
     protected $article;
-
+    /** @var Category */
+    protected $category;
+    
     // 1ページ当たりの表示件数
     const NUM_PER_PAGE = 10;
-
-    public function __construct(Article $article)
+    
+    public function __construct(Article $article, Category $category)
     {
-        // Article モデルクラスのインスタンスを作成
-        // 「依存注入」により、コンストラクタの引数にタイプヒントを指定するだけで、
-        // インスタンスが生成される（コンストラクターインジェクション）
         $this->article = $article;
+        $this->category = $category;
     }
 
     /**
@@ -121,5 +122,16 @@ class AdminBlogController extends Controller
     {
         $list = $this->article->getArticleList(self::NUM_PER_PAGE);
         return view('admin_blog.list', compact('list'));
+    }
+
+    /**
+     * カテゴリ一覧画面
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function category()
+    {
+        $list = $this->category->getCategoryList(self::NUM_PER_PAGE);
+        return view('admin_blog.category', compact('list'));
     }
 }

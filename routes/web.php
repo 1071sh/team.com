@@ -22,7 +22,14 @@ Route::prefix('admin')->group(function () {
     Route::post('delete', 'AdminBlogController@delete')->name('admin_delete');
     // 一覧画面
     Route::get('list', 'AdminBlogController@list')->name('admin_list');
+
+    // カテゴリー一覧
+    Route::get('category', 'AdminBlogController@category')->name('admin_category');
+    // カテゴリー追加・編集
+    Route::post('category/edit', 'AdminBlogController@editCategory')->name('admin_category_edit');
+    // カテゴリー削除
+    Route::post('category/delete', 'AdminBlogController@deleteCategory')->name('admin_category_delete');
 });
 
-
+// トップ画面
 Route::get('/', 'FrontBlogController@index')->name('front_index');
