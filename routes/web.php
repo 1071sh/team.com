@@ -23,3 +23,6 @@ Route::prefix('admin')->group(function () {
     // 一覧画面
     Route::get('list', 'AdminBlogController@list')->name('admin_list');
 });
+
+
+Route::get('/', 'FrontBlogController@index')->name('front_index');

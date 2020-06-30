@@ -4,7 +4,7 @@
 @section('body')
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-8 offset-md-2">
             <h2>ブログ記事投稿・編集</h2>
 
             {{--if 文による条件分岐--}}
