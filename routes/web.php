@@ -11,12 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 
 Route::get('admin/form', 'AdminBlogController@form')->name('admin_form');
 
-// ブログ記事　保存処理
+
+
+
+Route::get('admin/form/{article_id?}', 'AdminBlogController@form')->name('admin_form');
+
+// 保存処理
 Route::post('admin/post', 'AdminBlogController@post')->name('admin_post');

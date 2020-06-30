@@ -43,20 +43,22 @@
                 <form method="POST" action="{{ route('admin_post') }}">
                     <div class="form-group">
                         <label>日付</label>
-                        <input class="form-control" name="post_date" size="20" value="" placeholder="日付を入力して下さい。">
+                        {{--{{$variable or 'Default'}} は {{isset($variable) ? $variable : 'Default'}} と同じ意味で、変数があるかどうかわからないときに便利です--}}
+                        <input class="form-control" name="post_date" size="20" value="{{ old('post_date') }}" placeholder="日付を入力して下さい。">
                     </div>
 
                     <div class="form-group">
                         <label>タイトル</label>
-                        <input class="form-control" name="title" value="" placeholder="タイトルを入力して下さい。">
+                        <input class="form-control" name="title" value="{{ old('title') }}" placeholder="タイトルを入力して下さい。">
                     </div>
 
                     <div class="form-group">
                         <label>本文</label>
-                        <textarea class="form-control" rows="15" name="body" placeholder="本文を入力してください。"></textarea>
+                        <textarea class="form-control" rows="15" name="body" placeholder="本文を入力してください。">{{ old('body') }}</textarea>
                     </div>
-
                     <input type="submit" class="btn btn-primary btn-sm" value="送信">
+                    {{--article_id があるか無いかで新規作成か既存編集かを区別する--}}
+                    <input type="hidden" name="article_id" value="{{ $article_id }}">
                     {{--CSRFトークンが生成される--}}
                     {{ csrf_field() }}
                 </form>
