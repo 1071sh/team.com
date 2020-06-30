@@ -12,12 +12,11 @@
 */
 
 
-Route::get('admin/form', 'AdminBlogController@form')->name('admin_form');
-
-
-
 
 Route::get('admin/form/{article_id?}', 'AdminBlogController@form')->name('admin_form');
 
 // 保存処理
 Route::post('admin/post', 'AdminBlogController@post')->name('admin_post');
+
+// 削除処理
+Route::post('admin/delete', 'AdminBlogController@delete')->name('admin_delete');
