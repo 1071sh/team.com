@@ -81,10 +81,10 @@ class AdminBlogRequest extends FormRequest
     }
 
     /**
-      * オーバーライドしてAPIとして実行されているときのレスポンスを json にする
-      *
-      * @param Validator $validator
-      */
+     * オーバーライドしてAPIとして実行されているときのレスポンスを json にする
+     *
+     * @param Validator $validator
+     */
     protected function failedValidation(Validator $validator)
     {
         $action = $this->getCurrentAction();

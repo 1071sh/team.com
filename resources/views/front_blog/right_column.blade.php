@@ -1,7 +1,27 @@
 {{--右カラム--}}
 <div class="col-md-2">
     <div class="card">
-        <h5 class="card-header">月別アーカイブ</h5>
+        <div class="card-heading">
+            <h3 class="card-title">カテゴリー</h3>
+        </div>
+        <div class="card-body">
+            <ul class="monthly_archive">
+                @forelse($category_list as $category)
+                <li>
+                    <a href="{{ route('front_index', ['category_id' => $category->category_id]) }}">
+                        {{ $category->name }}
+                    </a>
+                </li>
+                @empty
+                <p>カテゴリーがありません</p>
+                @endforelse
+            </ul>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-heading">
+            <h3 class="card-title">月別アーカイブ</h3>
+        </div>
         <div class="card-body">
             <ul class="monthly_archive">
                 @forelse($month_list as $value)

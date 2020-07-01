@@ -24,16 +24,19 @@ class FrontBlogRequest extends FormRequest
     public function rules()
     {
         return [
-            'year'  => 'integer',
-            'month' => 'integer',
+            'year'        => 'integer',
+            'month'       => 'integer',
+            'category_id' => 'integer|min:1',
         ];
     }
 
     public function messages()
     {
         return [
-            'year.integer'  => '年は整数にしてください',
-            'month.integer' => '月は整数にしてください',
+            'year.integer'        => '年は整数にしてください',
+            'month.integer'       => '月は整数にしてください',
+            'category_id.integer' => 'カテゴリーIDは整数にしてください',
+            'category_id.min'     => 'カテゴリーIDは1以上にしてください',
         ];
     }
 }

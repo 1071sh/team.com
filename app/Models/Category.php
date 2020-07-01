@@ -14,6 +14,17 @@ class Category extends Model
     protected $dates = ['deleted_at', 'created_at', 'updated_at'];
 
     /**
+     * Article モデルのリレーション
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function articles()
+    {
+        // 1つのカテゴリーは多くの記事と関係しているので hasMany メソッドを利用する
+        return $this->hasMany('App\Models\Article', 'category_id', 'category_id');
+    }
+
+    /**
      * カテゴリリストを取得する
      *
      * @param int    $num_per_page 1ページ当たりの表示件数

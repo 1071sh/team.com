@@ -62,14 +62,14 @@
                 {{--article_id があるか無いかで新規作成か既存編集かを区別する--}}
                 <input type="hidden" name="article_id" value="{{ $article_id }}">
                 {{--CSRFトークンが生成される--}}
-                {{ csrf_field() }}
+                @csrf
             </form>
 
             @if ($article_id)
             <form action="{{ route('admin_delete') }}" method="POST">
                 <input type="submit" class="btn btn-primary btn-sm" value="削除">
                 <input type="hidden" name="article_id" value="{{ $article_id }}">
-                {{ csrf_field() }}
+                @csrf
             </form>
             @endif
         </div>

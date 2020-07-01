@@ -12,7 +12,6 @@
 */
 
 
-// 下記のようにルーティングをグループ化することもできる
 // prefix メソッドを使って、グループ内の全てのルートの URI に admin を付ける
 Route::prefix('admin')->group(function () {
     Route::get('form/{article_id?}', 'AdminBlogController@form')->name('admin_form');
@@ -31,5 +30,5 @@ Route::prefix('admin')->group(function () {
     Route::post('category/delete', 'AdminBlogController@deleteCategory')->name('admin_category_delete');
 });
 
-// トップ画面
+// 一覧ページ
 Route::get('/', 'FrontBlogController@index')->name('front_index');
